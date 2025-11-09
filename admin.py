@@ -1,9 +1,8 @@
-import pandas as pd
-from data import judul
 from prettytable import PrettyTable
+from create import lihatproduk,judul
+import pandas as pd
 import inquirer
 import os
-from read import lihatproduk
 
 def tambahproduk():
     print("tambah produk")

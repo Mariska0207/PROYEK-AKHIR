@@ -1,10 +1,8 @@
 from prettytable import PrettyTable
-from data import judul
+from create import lihatproduk,tambahpesanan,judul
 import pandas as pd
 import inquirer
 import os
-from read import lihatproduk
-from create import tambahpesanan
 
 pesanan = {}
 

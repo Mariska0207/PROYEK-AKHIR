@@ -1,5 +1,4 @@
 from autentikasi import login, registrasi
-from data import judul
 import inquirer
 import os
 

@@ -1,5 +1,5 @@
-from data import judul,info
-from user import loginuser
+from create import judul,info
+from USER import loginuser
 from admin import loginadmin
 import pandas as pd
 import os
