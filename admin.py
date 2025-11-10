@@ -4,8 +4,10 @@ import pandas as pd
 import inquirer
 import os
 
+#ahayyyyyyyyy
+
 def tambahproduk():
-    print("tambah produk")
+    print("tambahi produk.")
 
 def updateproduk():
     print("update produk")
@@ -21,7 +23,13 @@ def laporanpenjualan():
 
 def hapususer():
     print("hapus user")
-    
+
+def nyoba():
+    print("nyoba")
+
+print("haoo")
+
+
 def loginadmin(username):
     while True:
         os.system("cls || clear")
