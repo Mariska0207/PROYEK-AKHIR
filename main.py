@@ -6,7 +6,7 @@ while True:
     os.system("cls || clear")
     menu = [
         inquirer.List("opsi",
-                    message="TOKO PORDUK FASHION COWO/CEWE",
+                    message="TOKO PORDUK FASHION",
                     choices=["1. registrasi", "2. login", "3. keluar"],
                 ),
     ]
@@ -27,3 +27,4 @@ while True:
 os.system('cls || clear')
 print("ANDA TELAH KELUAR".center(50))
 print("TERIMA KASIH SUDAH MENGGUNAKAN PROGRAM INI".center(50))
+
