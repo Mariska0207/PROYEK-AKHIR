@@ -4,10 +4,8 @@ import pandas as pd
 import inquirer
 import os
 
-#ahayyyyyyyyy
-
 def tambahproduk():
-    print("tambahi produk.")
+    print("tambah produk.")
 
 def updateproduk():
     print("update produk")
@@ -23,11 +21,6 @@ def laporanpenjualan():
 
 def hapususer():
     print("hapus user")
-
-def nyoba():
-    print("nyoba")
-
-print("haoo")
 
 
 def loginadmin(username):
