@@ -5,20 +5,15 @@ import inquirer
 import os
 
 def tambahproduk():
-    print("tambah produk.")
-
+    print("tambah produk")
 def updateproduk():
     print("update produk")
-
 def hapusproduk():
     print("hapus produk")
-
 def verifikasitopup():
     print("verifikasi top up")
-
 def laporanpenjualan():
     print("laporan penjualan")
-
 def hapususer():
     print("hapus user")
 
