@@ -5,6 +5,7 @@ import inquirer
 import os
 
 pesanan = {}
+antriTopUp = []
 
 def lihatsaldo(username):
     try:
@@ -46,9 +47,14 @@ def topup(username):
     except ValueError:
         print("Masukkan angka yang valid.")
         return
-    df.loc[df['username'] == username, 'saldo'] += nominal
-    df.to_csv('akun.csv', index=False)
-    print(f"Top up sebesar {nominal} berhasil.")
+    antriTopUp.append({'username': username, 'nominal': nominal, 'status': 'pending'})
+    table = PrettyTable()
+    table.field_names = ['Username', 'Nominal', 'Status']
+    for item in antriTopUp:
+        table.add_row([item['username'], item['nominal'], item['status']])
+    print("\nDaftar Antrian Top Up:")
+    print(table)
+    print("\nSilahkan tunggu konfirmasi dari admin. Jangan lupa cek status top up Anda.")
     
 def loginuser(username):
     while True:
