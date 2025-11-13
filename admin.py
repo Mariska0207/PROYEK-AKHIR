@@ -6,14 +6,16 @@ import os
 
 def tambahproduk():
     print("tambah produk")
+
 def updateproduk():
     print("update produk")
-# dihapus: duplikasi fungsi hapusproduk karena sudah ada hapus_produk di create.py
+
 def verifikasitopup():
     print("verifikasi top up")
+    
 def laporanpenjualan():
     print("laporan penjualan")
-# tidak digunakan lagi, digantikan hapus_user di create.py
+
 def hapususer():
     hapus_user()
 
