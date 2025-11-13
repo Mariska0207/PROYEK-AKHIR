@@ -175,8 +175,8 @@ def hapus_produk():
         return
 
     nama_produk = df.loc[df['id'] == id_produk, 'nama'].values[0]
-    konfirmasi = input(f"Yakin hapus produk '{nama_produk}' (ID {id_produk})? [Y/N]: ").strip().lower()
-    if konfirmasi != 'Y':
+    konfirmasi = input(f"Yakin hapus produk '{nama_produk}' (ID {id_produk})? [y/N]: ").strip().lower()
+    if konfirmasi != 'y':
         print("Penghapusan dibatalkan.")
         return
     
