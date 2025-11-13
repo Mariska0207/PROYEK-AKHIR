@@ -18,6 +18,89 @@ def info(teks):
     print(teks.center(50))
     print(garis1)
 
+# Admin: tambah produk
+# - Auto-increment ID berdasarkan kolom 'id' terbesar pada produk.csv
+# - Validasi input angka untuk harga dan stok
+# - Validasi pilihan enumerasi untuk gender dan kategori
+# - Tampilkan ringkasan setelah penambahan
+
+def tambah_produk():
+    columns = ["id", "nama", "kategori", "harga", "gender", "stok"]
+    try:
+        df = pd.read_csv('produk.csv')
+        # Pastikan kolom minimum ada, jika tidak, sesuaikan
+        for col in columns:
+            if col not in df.columns:
+                raise ValueError("Struktur produk.csv tidak sesuai: kolom '" + col + "' tidak ditemukan")
+    except FileNotFoundError:
+        # Jika belum ada file, mulai dengan DataFrame kosong
+        df = pd.DataFrame(columns=columns)
+    except ValueError as e:
+        print(str(e))
+        return
+
+    # Tentukan id baru
+    if df.empty:
+        next_id = 1
+    else:
+        try:
+            next_id = int(df['id'].max()) + 1
+        except Exception:
+            print("Kolom id mengandung nilai tidak valid.")
+            return
+
+    # Input interaktif
+    nama = input("Masukkan nama produk: ").strip()
+    if not nama:
+        print("Nama produk tidak boleh kosong.")
+        return
+
+    kategori_choices = ["atasan", "bawahan", "sepatu", "pelengkap"]
+    gender_choices = ["pria", "wanita", "unisex"]
+
+    kategori_prompt = [
+        inquirer.List("kategori", message="Pilih kategori", choices=[f"{i+1}. {v}" for i, v in enumerate(kategori_choices)])
+    ]
+    kategori_ans = inquirer.prompt(kategori_prompt)["kategori"]
+    kategori = kategori_choices[int(kategori_ans.split(".")[0]) - 1]
+
+    gender_prompt = [
+        inquirer.List("gender", message="Pilih gender", choices=[f"{i+1}. {v}" for i, v in enumerate(gender_choices)])
+    ]
+    gender_ans = inquirer.prompt(gender_prompt)["gender"]
+    gender = gender_choices[int(gender_ans.split(".")[0]) - 1]
+
+    try:
+        harga = int(input("Masukkan harga (angka): ").strip())
+        if harga <= 0:
+            print("Harga harus > 0.")
+            return
+    except ValueError:
+        print("Harga harus berupa angka.")
+        return
+
+    try:
+        stok = int(input("Masukkan stok (angka): ").strip())
+        if stok < 0:
+            print("Stok tidak boleh negatif.")
+            return
+    except ValueError:
+        print("Stok harus berupa angka.")
+        return
+
+    # Susun baris baru dan simpan
+    new_row = {"id": next_id, "nama": nama, "kategori": kategori, "harga": harga, "gender": gender, "stok": stok}
+    df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
+    try:
+        df.to_csv('produk.csv', index=False)
+        print("Produk berhasil ditambahkan:")
+        table = PrettyTable()
+        table.field_names = ["id", "nama", "kategori", "harga", "gender", "stok"]
+        table.add_row([next_id, nama, kategori, harga, gender, stok])
+        print(table)
+    except Exception as e:
+        print(f"Gagal menyimpan produk: {e}")
+
 def lihatproduk():
     try:
         df = pd.read_csv('produk.csv')
@@ -145,6 +228,91 @@ def tambahpesanan():
         table.add_row([no, item['nama'], item['kategori'], item['harga'], item['gender'], item['jumlah']])
     print(table)
     print(f"Pesanan '{nama}' telah ditambahkan.")
+
+# Admin: hapus user
+# - Menampilkan daftar user dari akun.csv
+# - Memilih user berdasarkan id atau username
+# - Validasi agar admin tidak terhapus
+# - Simpan perubahan ke akun.csv
+
+def hapus_user():
+    akun_cols = ["id", "username", "password", "role", "saldo"]
+    try:
+        df = pd.read_csv('akun.csv')
+        for c in akun_cols:
+            if c not in df.columns:
+                raise ValueError("Struktur akun.csv tidak sesuai: kolom '" + c + "' tidak ditemukan")
+    except FileNotFoundError:
+        print("File akun.csv tidak ditemukan.")
+        return
+    except ValueError as e:
+        print(str(e))
+        return
+
+    if df.empty:
+        print("Tidak ada data user.")
+        return
+
+    # Tampilkan tabel user
+    table = PrettyTable()
+    table.field_names = df.columns.tolist()
+    for _, row in df.iterrows():
+        table.add_row(row.tolist())
+    print(table)
+
+    # Pilih metode hapus
+    pilih_prompt = [
+        inquirer.List("metode", message="Hapus berdasarkan", choices=["1. id", "2. username"])
+    ]
+    metode = inquirer.prompt(pilih_prompt)["metode"]
+
+    if metode.startswith("1"):
+        try:
+            id_str = input("Masukkan ID user yang akan dihapus: ").strip()
+            target_id = int(id_str)
+        except ValueError:
+            print("ID harus berupa angka.")
+            return
+
+        if target_id not in df['id'].values:
+            print("ID user tidak ditemukan.")
+            return
+
+        # Cegah hapus admin
+        if any((df['id'] == target_id) & (df['role'] == 'admin')):
+            print("Akun admin tidak boleh dihapus.")
+            return
+
+        username = df.loc[df['id'] == target_id, 'username'].values[0]
+        konfirmasi = input(f"Yakin hapus user '{username}' (ID {target_id})? [y/N]: ").strip().lower()
+        if konfirmasi != 'y':
+            print("Penghapusan dibatalkan.")
+            return
+
+        df_baru = df[df['id'] != target_id]
+    else:
+        username = input("Masukkan username yang akan dihapus: ").strip()
+        if username == "":
+            print("Username tidak boleh kosong.")
+            return
+        if username not in df['username'].values:
+            print("Username tidak ditemukan.")
+            return
+        if any((df['username'] == username) & (df['role'] == 'admin')):
+            print("Akun admin tidak boleh dihapus.")
+            return
+        konfirmasi = input(f"Yakin hapus user '{username}'? [y/N]: ").strip().lower()
+        if konfirmasi != 'y':
+            print("Penghapusan dibatalkan.")
+            return
+        df_baru = df[df['username'] != username]
+
+    try:
+        df_baru.to_csv('akun.csv', index=False)
+        print("User berhasil dihapus.")
+    except Exception as e:
+        print(f"Gagal menghapus user: {e}")
+
 
 def hapus_produk():
     try:

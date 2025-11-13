@@ -1,5 +1,5 @@
 from prettytable import PrettyTable
-from create import lihatproduk,judul,hapus_produk
+from create import lihatproduk,judul,hapus_produk, tambah_produk, hapus_user
 import pandas as pd
 import inquirer
 import os
@@ -8,14 +8,14 @@ def tambahproduk():
     print("tambah produk")
 def updateproduk():
     print("update produk")
-def hapusproduk():
-    print("hapus produk")
+# dihapus: duplikasi fungsi hapusproduk karena sudah ada hapus_produk di create.py
 def verifikasitopup():
     print("verifikasi top up")
 def laporanpenjualan():
     print("laporan penjualan")
+# tidak digunakan lagi, digantikan hapus_user di create.py
 def hapususer():
-    print("hapus user")
+    hapus_user()
 
 def loginadmin(username):
     while True:
@@ -32,7 +32,7 @@ def loginadmin(username):
 
         if "1" in menuuser:
             judul("TAMBAH PRODUK")
-            tambahproduk()
+            tambah_produk()
             input("enter untuk kembali ke menu....")
         elif "2" in menuuser:
             judul("LIHAT PRODUK")
