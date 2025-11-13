@@ -147,12 +147,6 @@ def tambahpesanan():
     print(f"Pesanan '{nama}' telah ditambahkan.")
 
 def hapus_produk():
-    """
-    Hapus produk dari produk.csv berdasarkan ID yang dimasukkan admin.
-    - Menampilkan daftar produk terlebih dahulu agar ID mudah dipilih.
-    - Validasi ID dan handle error file tidak ada.
-    """
-    # Tampilkan semua produk agar admin bisa melihat ID
     try:
         df = pd.read_csv('produk.csv')
     except FileNotFoundError:
@@ -169,7 +163,6 @@ def hapus_produk():
         table.add_row(row.tolist())
     print(table)
 
-    # Minta input ID produk yang akan dihapus
     try:
         id_str = input("Masukkan ID produk yang akan dihapus: ").strip()
         id_produk = int(id_str)
@@ -181,14 +174,12 @@ def hapus_produk():
         print("ID produk tidak ditemukan.")
         return
 
-    # Konfirmasi
     nama_produk = df.loc[df['id'] == id_produk, 'nama'].values[0]
-    konfirmasi = input(f"Yakin hapus produk '{nama_produk}' (ID {id_produk})? [y/N]: ").strip().lower()
-    if konfirmasi != 'y':
+    konfirmasi = input(f"Yakin hapus produk '{nama_produk}' (ID {id_produk})? [Y/N]: ").strip().lower()
+    if konfirmasi != 'Y':
         print("Penghapusan dibatalkan.")
         return
-
-    # Hapus baris dengan ID tersebut dan simpan kembali
+    
     try:
         df_baru = df[df['id'] != id_produk]
         df_baru.to_csv('produk.csv', index=False)
