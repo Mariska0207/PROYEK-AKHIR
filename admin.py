@@ -1,10 +1,6 @@
 from prettytable import PrettyTable
 from create import lihatproduk,judul
-<<<<<<< Updated upstream
-
-=======
 from USER import antriTopUp
->>>>>>> Stashed changes
 import pandas as pd
 import inquirer
 import os
@@ -124,9 +120,6 @@ def hapusproduk():
     print("hapus produk")
 
 def verifikasitopup():
-<<<<<<< Updated upstream
-    print("verifikasi top up")
-=======
     if not antriTopUp:
         print("Tidak ada antrian top up.")
         return
@@ -175,7 +168,6 @@ def verifikasitopup():
 
     except (ValueError, IndexError, TypeError):
         print("Input tidak valid.")
->>>>>>> Stashed changes
 
 def laporanpenjualan():
     print(LP)
