@@ -6,7 +6,7 @@ while True:
     os.system("cls || clear")
     menu = [
         inquirer.List("opsi",
-                    message="TOKO PORDUK FASHION",
+                    message="TOKO PRODUK FASHION",
                     choices=["1. registrasi", "2. login", "3. keluar"],
                 ),
     ]

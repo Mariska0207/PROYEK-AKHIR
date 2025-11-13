@@ -1,5 +1,5 @@
 from prettytable import PrettyTable
-from create import lihatproduk,judul
+from create import lihatproduk,judul,hapus_produk
 import pandas as pd
 import inquirer
 import os
@@ -21,7 +21,6 @@ def laporanpenjualan():
 
 def hapususer():
     print("hapus user")
-
 
 def loginadmin(username):
     while True:
@@ -50,7 +49,7 @@ def loginadmin(username):
             input("enter untuk kembali ke menu....")
         elif "4" in menuuser:
             judul("HAPUS PRODUK")
-            hapusproduk()
+            hapus_produk()
             input("enter untuk kembali ke menu....")
         elif "5" in menuuser:
             judul("VERIFIKASI TOP UP")
