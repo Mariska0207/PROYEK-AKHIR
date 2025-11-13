@@ -38,6 +38,7 @@ def topup(username):
         if j["username"] == username:
             saldo = j["saldo"]
     print(f"Saldo anda: {saldo}")
+
     try:
         nominal = int(input("Masukkan nominal top up: "))
         if nominal <= 0:
