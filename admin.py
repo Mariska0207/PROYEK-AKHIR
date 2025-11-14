@@ -117,6 +117,41 @@ def updateproduk(username):
             print("Gender sama dengan sebelumnya, tidak diubah.")
 
 def hapusproduk():
+    try:
+        df = pd.read_csv('produk.csv')
+    except FileNotFoundError:
+        print("File produk.csv tidak ditemukan.")
+        return
+    if df.empty:
+        print("Tidak ada data produk.")
+        return
+    table = PrettyTable()
+    table.field_names = df.columns.tolist()
+    for _, row in df.iterrows():
+        table.add_row(row.tolist())
+    print(table)
+    try:
+        id_str = input("Masukkan ID produk yang akan dihapus: ").strip()
+        id_produk = int(id_str)
+    except ValueError:
+        print("ID harus berupa angka valid.")
+        return
+    if id_produk not in df['id'].values:
+        print("ID produk tidak ditemukan.")
+        return
+    nama_produk = df.loc[df['id'] == id_produk, 'nama'].values[0]
+    konfirmasi = input(f"Yakin hapus produk '{nama_produk}' (ID {id_produk})? [y/N]: ").strip().lower()
+    if konfirmasi != 'y':
+        print("Penghapusan dibatalkan.")
+        return
+    
+    try:
+        df_baru = df[df['id'] != id_produk]
+        df_baru.to_csv('produk.csv', index=False)
+        print(f"Produk dengan ID {id_produk} berhasil dihapus.")
+    except Exception as e:
+        print(f"Gagal menghapus produk: {e}")
+
     print("hapus produk")
 
 def verifikasitopup():
