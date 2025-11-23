@@ -1,10 +1,10 @@
 id,nama,kategori,stok,harga,gender
 1,kaos putih,atasan,8,20000,unisex
 2,celana jeans,bawahan,10,45000,unisex
-3,kemeja kotak-kotak pink,atasan,10,40000,wanita
+3,kemeja kotak-kotak pink,atasan,9,40000,wanita
 4,topi abu-abu,pelengkap,10,15000,unisex
 5,rok merah,bawahan,8,25000,wanita
-6,jas putih,atasan,5,32000,pria
+6,jas putih,atasan,3,32000,pria
 7,sepatu hak tinggi merah,sepatu,9,27000,wanita
 8,sepatu pantofel hitam,sepatu,9,29000,pria
 9,sepatu lari hitam-putih,sepatu,10,33000,unisex

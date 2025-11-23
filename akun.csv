@@ -1,6 +1,6 @@
 id,username,password,role,saldo
 1,admin,123,admin,0
-2,user,54321,user,1156000
+2,user,54321,user,1104000
 3,mariska,4321,user,200000
 4,malika,0987,user,150000
 5,adalace,gacor,user,300000
