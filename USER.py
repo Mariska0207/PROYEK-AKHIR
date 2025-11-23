@@ -229,7 +229,7 @@ def konfirmasipesanan(username):
     print("pesanan berhasil dikonfirmasi")
 
 def historipembelianTopUp():
-    judul("PEMBELIAN & TOP UP")
+    judul("HISTORI PEMBELIAN & TOP UP")
     opsi = [
         inquirer.List("pilih",
                 message="Pilih histori yang ingin dilihat",
@@ -263,7 +263,7 @@ def historipembelianTopUp():
             waktu_pembelian = row['waktu'] if 'waktu' in riwayat.columns else 'N/A'
             table.add_row([row['nama_produk'], row['jumlah'], row['total'], waktu_pembelian])
 
-        judul("RIWAYAT PEMBELIAN ANDA")
+        judul("HISTORI PEMBELIAN ANDA")
         print(table)
 
     def historiTopUp():
