@@ -286,7 +286,7 @@ def laporanpenjualan():
     pilihan = answer["pilih"]
     os.system("cls || clear")
     
-    def laporanPembelian():
+    def laporanPenjualan():
         try:
             df = pd.read_csv("riwayat.csv")
         except FileNotFoundError:
@@ -334,7 +334,7 @@ def laporanpenjualan():
         print(f"Total jumlah top up masuk: {total_topup}")
         
     if "1" in pilihan:
-        laporanPembelian()
+        laporanPenjualan()
     else:
         laporanTopUp()
         
