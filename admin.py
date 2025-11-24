@@ -6,8 +6,6 @@ import inquirer
 import os
 
 
-LP = {}
-
 def tambahproduk():
     columns_required = ["id", "nama", "kategori", "harga", "gender", "stok"]
     try:
@@ -274,29 +272,72 @@ def verifikasitopup():
         print("Input tidak valid.")
 
 def laporanpenjualan():
-    print("=== LAPORAN PENJUALAN ===")
+    judul("LAPORAN PENJUALAN DAN TOPUP")
+    
+    opsi = [
+        inquirer.List(
+            "pilih",
+            message="Pilih laporan yang ingin dilihat",
+            choices=["1. Laporan Penjualan", "2. Laporan Top Up"],
+        )
+    ]
+    
+    answer = inquirer.prompt(opsi)
+    pilihan = answer["pilih"]
+    os.system("cls || clear")
+    
+    def laporanPembelian():
+        try:
+            df = pd.read_csv("riwayat.csv")
+        except FileNotFoundError:
+            print("Belum ada data penjualan.")
+            return
+        
+        if df.empty:
+            print("Belum ada data penjualan.")
+            return
 
-    try:
-        df = pd.read_csv("riwayat.csv")
-    except FileNotFoundError:
-        print("Belum ada data penjualan.")
-        return
+        table = PrettyTable()
+        table.field_names = ["No", "Username", "Nama Produk", "Jumlah", "Total", "Waktu"]
+        
+        for idx, row in df.iterrows():
+            waktu_row = row["waktu"] if "waktu" in df.columns else "N/A"
+            table.add_row([idx + 1, row["username"], row["nama_produk"], row["jumlah"], row["total"], waktu_row])
+        judul("LAPORAN PENJUALAN")
+        print(table)
+        total_pemasukan = df["total"].sum()
+        print(f"Total pemasukan: {total_pemasukan}")
+        
+    def laporanTopUp():
+        try:
+            df = pd.read_csv("topup.csv")
+        except FileNotFoundError:
+            print("Belum ada data top up.")
+            return
 
-    if df.empty:
-        print("Belum ada data penjualan.")
-        return
+        if df.empty:
+            print("Belum ada data top up.")
+            return
 
-    table = PrettyTable()
-    table.field_names = ["No", "Username", "Nama Produk", "Jumlah", "Total"]
+        table = PrettyTable()
+        table.field_names = ["ID", "Username", "Jumlah Top Up", "Waktu Top Up"]
 
-    for idx, row in df.iterrows():
-        table.add_row([idx + 1, row['username'], row['nama_produk'], row['jumlah'], row['total']])
-
-    print(table)
-
-    total_pemasukan = df['total'].sum()
-    print(f"Total pemasukan: {total_pemasukan}")
-
+        for _, row in df.iterrows():
+            id_row = row["id"] if "id" in df.columns else "N/A"
+            user_row = row["username"] if "username" in df.columns else "N/A"
+            jumlah_row = row["top_up"] if "top_up" in df.columns else "N/A"
+            waktu_row = row["waktu"] if "waktu" in df.columns else "N/A"
+            table.add_row([id_row, user_row, jumlah_row, waktu_row])
+        judul("LAPORAN TOPUP")
+        print(table)
+        total_topup = df["top_up"].sum()
+        print(f"Total jumlah top up masuk: {total_topup}")
+        
+    if "1" in pilihan:
+        laporanPembelian()
+    else:
+        laporanTopUp()
+        
 def hapususer():
     akun_cols = ["id", "username", "password", "role", "saldo"]
     try:
@@ -381,7 +422,7 @@ def loginadmin(username):
         menuuser = [
             inquirer.List("opsi",
                     message="SILAHKAN PILIH OPSI",
-                    choices=["1. tambah produk", "2. lihat produk", "3. update produk", "4. hapus produk", "5. verifikasi top up", "6. laporan penjualan", "7. hapus user", "8. keluar"],
+                    choices=["1. tambah produk", "2. lihat produk", "3. update produk", "4. hapus produk", "5. verifikasi top up", "6. laporan penjualan dan topup", "7. hapus user", "8. keluar"],
                 ),
         ]
         answer = inquirer.prompt(menuuser)
@@ -409,7 +450,6 @@ def loginadmin(username):
             verifikasitopup()
             input("enter untuk kembali ke menu....")
         elif "6" in menuuser:
-            judul("LAPORAN PENJUALAN")
             laporanpenjualan()
             input("enter untuk kembali ke menu....")
         elif "7" in menuuser:
