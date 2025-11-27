@@ -111,6 +111,6 @@ def login():
             print(Fore.RED + "Kesempatan Anda habis")
             input("Enter untuk keluar")
             os.system('cls || clear')
-            print("ANDA TELAH KELUAR".center(50))
-            print("TERIMA KASIH SUDAH MENGGUNAKAN PROGRAM INI".center(50))
+            print(Fore.YELLOW + "ANDA TELAH KELUAR".center(50))
+            print(Fore.YELLOW + "TERIMA KASIH SUDAH MENGGUNAKAN PROGRAM INI".center(50))
             exit()
